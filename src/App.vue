@@ -3,14 +3,12 @@ import { ref } from 'vue'
 
 const result = ref('')
 
-function getResult(str: string) {
+function getResult(str: string): void {
   result.value += str
 }
 
-function deleteSign(str: string) {
-  if (str === 'DELETE') {
-    result.value = result.value.slice(0, -1)
-  }
+function deleteSign(): void {
+  result.value = result.value.slice(0, -1)
 }
 </script>
 
@@ -63,7 +61,7 @@ function deleteSign(str: string) {
   >
     ?
   </button>
-  <button class="button_delete" @click="deleteSign('DELETE')">DELETE</button>
+  <button class="button_delete" @click="deleteSign">DELETE</button>
   <h1 class="result">{{ result }}</h1>
 </template>
 
