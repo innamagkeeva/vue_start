@@ -1,9 +1,143 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+type ButtonBase = {
+  id: number
+  text: string
+}
 
-const result = ref('')
+const arrayOfLetters: ButtonBase[] = [
+  {
+    id: 0,
+    text: 'A',
+  },
+  {
+    id: 1,
+    text: 'B',
+  },
+  {
+    id: 2,
+    text: 'C',
+  },
+  {
+    id: 3,
+    text: 'D',
+  },
+  {
+    id: 4,
+    text: 'E',
+  },
+  {
+    id: 5,
+    text: 'F',
+  },
+  {
+    id: 6,
+    text: 'G',
+  },
+  {
+    id: 7,
+    text: 'H',
+  },
+  {
+    id: 8,
+    text: 'I',
+  },
+  {
+    id: 9,
+    text: 'J',
+  },
+  {
+    id: 10,
+    text: 'K',
+  },
+  {
+    id: 11,
+    text: 'L',
+  },
+  {
+    id: 12,
+    text: 'M',
+  },
+  {
+    id: 13,
+    text: 'N',
+  },
+  {
+    id: 14,
+    text: 'O',
+  },
+  {
+    id: 15,
+    text: 'P',
+  },
+  {
+    id: 16,
+    text: 'Q',
+  },
+  {
+    id: 17,
+    text: 'R',
+  },
+  {
+    id: 18,
+    text: 'S',
+  },
+  {
+    id: 19,
+    text: 'T',
+  },
+  {
+    id: 20,
+    text: 'U',
+  },
+  {
+    id: 21,
+    text: 'V',
+  },
+  {
+    id: 22,
+    text: 'W',
+  },
+  {
+    id: 23,
+    text: 'X',
+  },
+  {
+    id: 24,
+    text: 'Y',
+  },
+  {
+    id: 25,
+    text: 'Z',
+  },
+
+  {
+    id: 26,
+    text: ' ',
+  },
+  {
+    id: 27,
+    text: '.',
+  },
+  {
+    id: 28,
+    text: ',',
+  },
+  {
+    id: 29,
+    text: '!',
+  },
+  {
+    id: 30,
+    text: '?',
+  },
+]
+
+import { ref } from 'vue'
+const result = ref(' ')
 
 function getResult(str: string): void {
+  console.log(str)
+
   result.value += str
 }
 
@@ -13,76 +147,56 @@ function deleteSign(): void {
 </script>
 
 <template>
-  <button class="button" @click="getResult('A')">A</button>
-  <button class="button" @click="getResult('B')">B</button>
-  <button class="button" @click="getResult('C')">C</button>
-  <button class="button" @click="getResult('D')">D</button>
-  <button class="button" @click="getResult('F')">F</button>
-  <button class="button" @click="getResult('G')">G</button>
-  <button class="button" @click="getResult('H')">H</button>
-  <button class="button" @click="getResult('I')">I</button>
-  <button class="button" @click="getResult('J')">J</button>
-  <button class="button" @click="getResult('K')">K</button>
-  <button class="button" @click="getResult('L')">L</button>
-  <button class="button" @click="getResult('M')">M</button>
-  <button class="button" @click="getResult('N')">N</button>
-  <button class="button" @click="getResult('O')">O</button>
-  <button class="button" @click="getResult('P')">P</button>
-  <button class="button" @click="getResult('Q')">Q</button>
-  <button class="button" @click="getResult('R')">R</button>
-  <button class="button" @click="getResult('S')">S</button>
-  <button class="button" @click="getResult('T')">T</button>
-  <button class="button" @click="getResult('U')">U</button>
-  <button class="button" @click="getResult('V')">V</button>
-  <button class="button" @click="getResult('W')">W</button>
-  <button class="button" @click="getResult('X')">X</button>
-  <button class="button" @click="getResult('Y')">Y</button>
-  <button class="button" @click="getResult('Z')">Z</button>
-  <button class="button_space" @click="getResult(' ')"></button>
-  <button class="button" v-if="result.length > 0" @click="getResult('.')">.</button>
-  <button
-    class="button"
-    v-if="result.length > 0 && result.slice(-1) !== '.'"
-    @click="getResult(',')"
-  >
-    ,
-  </button>
-  <button
-    class="button"
-    v-if="result.length > 0 && result.slice(-1) !== '.'"
-    @click="getResult('!')"
-  >
-    !
-  </button>
-  <button
-    class="button"
-    v-if="result.length > 0 && result.slice(-1) !== '.'"
-    @click="getResult('?')"
-  >
-    ?
-  </button>
-  <button class="button_delete" @click="deleteSign">DELETE</button>
+  <ul class="button">
+    <li
+      class="button__li"
+      v-for="element in arrayOfLetters"
+      :key="element.id"
+      @click="getResult(element.text)"
+    >
+      <p class="button__name">{{ element.text }}</p>
+    </li>
+  </ul>
+  <button class="btn__delete" @click="deleteSign">DELETE</button>
   <h1 class="result">{{ result }}</h1>
 </template>
 
 <style>
-button {
+.button {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.button__li,
+.btn__delete {
   margin: 10px;
   background-color: green;
   height: 60px;
-  width: 50px;
   border: none;
   border-radius: 20px;
   color: white;
   font-size: 20px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.button_space {
-  height: 30px;
+.button__li {
+  width: 50px;
 }
 
-.button_delete {
+.btn__delete {
   width: 100px;
 }
+
+.button__name {
+  font-size: 40px;
+}
+
+/* .button_space {
+  height: 30px;
+} */
 </style>
