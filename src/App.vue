@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
 type ButtonBase = {
   id: number
   text: string
@@ -132,7 +134,6 @@ const arrayOfLetters: ButtonBase[] = [
   },
 ]
 
-import { ref } from 'vue'
 const result = ref(' ')
 
 function getResult(str: string): void {
@@ -147,56 +148,58 @@ function deleteSign(): void {
 </script>
 
 <template>
-  <ul class="button">
+  <ul class="list">
     <li
-      class="button__li"
+      class="list__li"
       v-for="element in arrayOfLetters"
       :key="element.id"
-      @click="getResult(element.text)"
     >
-      <p class="button__name">{{ element.text }}</p>
+      <button
+        class="list__button-name"
+        @click="getResult(element.text)"
+      >
+        {{ element.text }}
+      </button>
     </li>
   </ul>
-  <button class="btn__delete" @click="deleteSign">DELETE</button>
-  <h1 class="result">{{ result }}</h1>
+  <button
+    class="list__button-delete"
+    @click="deleteSign"
+  >
+    DELETE
+  </button>
+  <p class="result">{{ result }}</p>
 </template>
 
 <style>
-.button {
+.list {
   list-style: none;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
-.button__li,
-.btn__delete {
+.list__button-name,
+.list__button-delete {
   margin: 10px;
   background-color: green;
   height: 60px;
   border: none;
   border-radius: 20px;
   color: white;
-  font-size: 20px;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.button__li {
+.list__button-name {
+  font-size: 40px;
   width: 50px;
 }
 
-.btn__delete {
+.list__button-delete {
+  font-size: 20px;
   width: 100px;
 }
-
-.button__name {
-  font-size: 40px;
-}
-
-/* .button_space {
-  height: 30px;
-} */
 </style>
