@@ -1,205 +1,112 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-type ButtonBase = {
-  id: number
-  text: string
-}
-
-const arrayOfLetters: ButtonBase[] = [
-  {
-    id: 0,
-    text: 'A',
-  },
-  {
-    id: 1,
-    text: 'B',
-  },
-  {
-    id: 2,
-    text: 'C',
-  },
-  {
-    id: 3,
-    text: 'D',
-  },
-  {
-    id: 4,
-    text: 'E',
-  },
-  {
-    id: 5,
-    text: 'F',
-  },
-  {
-    id: 6,
-    text: 'G',
-  },
-  {
-    id: 7,
-    text: 'H',
-  },
-  {
-    id: 8,
-    text: 'I',
-  },
-  {
-    id: 9,
-    text: 'J',
-  },
-  {
-    id: 10,
-    text: 'K',
-  },
-  {
-    id: 11,
-    text: 'L',
-  },
-  {
-    id: 12,
-    text: 'M',
-  },
-  {
-    id: 13,
-    text: 'N',
-  },
-  {
-    id: 14,
-    text: 'O',
-  },
-  {
-    id: 15,
-    text: 'P',
-  },
-  {
-    id: 16,
-    text: 'Q',
-  },
-  {
-    id: 17,
-    text: 'R',
-  },
-  {
-    id: 18,
-    text: 'S',
-  },
-  {
-    id: 19,
-    text: 'T',
-  },
-  {
-    id: 20,
-    text: 'U',
-  },
-  {
-    id: 21,
-    text: 'V',
-  },
-  {
-    id: 22,
-    text: 'W',
-  },
-  {
-    id: 23,
-    text: 'X',
-  },
-  {
-    id: 24,
-    text: 'Y',
-  },
-  {
-    id: 25,
-    text: 'Z',
-  },
-
-  {
-    id: 26,
-    text: ' ',
-  },
-  {
-    id: 27,
-    text: '.',
-  },
-  {
-    id: 28,
-    text: ',',
-  },
-  {
-    id: 29,
-    text: '!',
-  },
-  {
-    id: 30,
-    text: '?',
-  },
-]
-
-const result = ref(' ')
-
-function getResult(str: string): void {
-  console.log(str)
-
-  result.value += str
-}
-
-function deleteSign(): void {
-  result.value = result.value.slice(0, -1)
-}
+const textInput = ref('')
+const textInput2 = ref('')
+const selectedGender = ref('')
 </script>
 
 <template>
-  <ul class="list">
-    <li
-      class="list__li"
-      v-for="element in arrayOfLetters"
-      :key="element.id"
-    >
-      <button
-        class="list__button-name"
-        @click="getResult(element.text)"
+  <div class="user">
+    <input
+      class="user__box"
+      type="text"
+      placeholder="Введите имя"
+      v-model="textInput"
+    />
+    <input
+      class="user__box"
+      type="text"
+      placeholder="Ведите фамилию"
+      v-model="textInput2"
+    />
+    <div class="user__box">
+      <select
+        class="user__select"
+        name="floor"
+        v-model="selectedGender"
       >
-        {{ element.text }}
-      </button>
-    </li>
-  </ul>
-  <button
-    class="list__button-delete"
-    @click="deleteSign"
-  >
-    DELETE
-  </button>
-  <p class="result">{{ result }}</p>
+        <option value="">-- Выберите пол --</option>
+        <option value="male">мужской</option>
+        <option value="female">женский</option>
+      </select>
+    </div>
+    <button
+      class="user__box user__button-show"
+      type="button"
+      @click="console.log('меня нажали')"
+      :disabled="textInput.length === 0 || textInput2.length === 0 || selectedGender.length === 0"
+    >
+      Показать
+    </button>
+  </div>
+
+  <div class="letter">
+    <ul class="double">
+      <li class="double__li">
+        {{ textInput }}
+      </li>
+      <li class="double__li">
+        {{ textInput2 }}
+      </li>
+      <li class="double__li double__li-3">{{ selectedGender }}</li>
+    </ul>
+  </div>
 </template>
 
 <style>
-.list {
-  list-style: none;
+.user {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
 }
 
-.list__button-name,
-.list__button-delete {
-  margin: 10px;
-  background-color: green;
-  height: 60px;
-  border: none;
-  border-radius: 20px;
-  color: white;
+.double {
+  margin: 0;
+  padding: 0;
+}
+
+.user,
+.letter {
+  height: 300px;
+  width: 350px;
+  margin: 0 auto;
+}
+
+.user__box {
+  border: 1px solid black;
+  border-radius: 15px;
+}
+.user__box,
+.double__li {
+  height: 40px;
+  margin-bottom: 20px;
   cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.list__button-name {
-  font-size: 40px;
-  width: 50px;
-}
-
-.list__button-delete {
   font-size: 20px;
-  width: 100px;
+  padding: 0 10px;
+  outline: none;
+}
+
+.user__select {
+  width: 100%;
+  height: 30px;
+  font-size: 20px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.user__button-show {
+  background-color: green;
+}
+
+.double {
+  list-style: none;
 }
 </style>
+
+<!-- не понимаю как сделать чтоб вначале в инпуте был только placeholder, а при вводе - внизу в дубле шел сначала текст ("Ваше имя  или Ваша фамилия" и вводимые буквы) -->
+
+<!-- почему на кнопке задизейбливается только слово "показать", а не вся кнопка.  
+ И! почему срабатывает со знаком ||  а не &&     -->
+
+<!-- а как открыть нижнее поле после нажатия "Показать" = вообще не догоняю... -->
