@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 
 type GenderBase = {
-  value: string
+  value: GenderSeparationValue
   text: string
 }
 
-const genders: GenderBase[] = ref([
+type GenderSeparationValue = '' | 'male' | 'female'
+
+const genders = ref<GenderBase[]>([
   { value: '', text: '---Выберите пол---' },
   { value: 'male', text: 'мужской' },
   { value: 'female', text: 'женский' },
@@ -15,23 +16,20 @@ const genders: GenderBase[] = ref([
 
 const textInputName = ref('')
 const textInputSurname = ref('')
-const selectedGender = ref('')
+const selectedGender = ref<GenderSeparationValue>('')
 const isShowed = ref(false)
 
-// const buttonText = ref('показать')
-
 // function onSubmit(): void {
-//   isShowed.value = true
-//   buttonText.value = 'скрыть'
-// }
+//   // Используем if для переключения состояния
+//   if (isShowed.value) {
+//     isShowed.value = false // Если данные показываются, скрываем их
+//   } else {
+//     isShowed.value = true // Если данные скрыты, показываем их
+//   }
+// }    //А упрощенная запись этой функции ниже :
 
 function onSubmit(): void {
-  // Используем if для переключения состояния
-  if (isShowed.value) {
-    isShowed.value = false // Если данные показываются, скрываем их
-  } else {
-    isShowed.value = true // Если данные скрыты, показываем их
-  }
+  isShowed.value = !isShowed.value
 }
 
 const buttonText = computed(() => (isShowed.value ? 'скрыть' : 'показать')) // Условный текст кнопки
@@ -139,16 +137,7 @@ const buttonText = computed(() => (isShowed.value ? 'скрыть' : 'показ
 }
 
 .form__button-show:disabled {
-  opacity: 50%;
+  opacity: 70%;
   cursor: not-allowed;
 }
 </style>
-
-<!-- вопросы:
- 1)  { value: 'male', text: 'мужской' } какую задачу имеет value: 'male' если пользователю видно только значение 'мужской'?
- ПРАВИЛЬНО ЛИ Я ПОНИМАЮ  что это только ключ и нужен только для  работы с кодом? -->
-
-<!-- 2)в опциях: почему в поле по умолчанию выводится строка именно с пустой строкой в value? я пробовала менять местами в коде - все равно она, значит не по порядку, а именно с пустой строкой (---Выберете пол---) -->
-
-<!-- 3)
- как при нажатии на "показать" открывать нижнее поле и менять текст на "скрыть" я быстро сама поняла, а вот обратно - вообще не придумала, хотя пыталась долго.  то что написала - взяла из GPT?, к стати несколько разных готовых вариантов посмотрела.   каждая строчка понятна, а в целом не очень складывается в голове.. надо чтоб словами ты рассказал.     ну или вариант правильнее -->
