@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { ref, computed } from 'vue'
 
 type GenderBase = {
@@ -139,5 +139,95 @@ const buttonText = computed(() => (isShowed.value ? 'скрыть' : 'показ
 .form__button-show:disabled {
   opacity: 70%;
   cursor: not-allowed;
+}
+</style> -->
+
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+
+type CurrenciesSeparationValue = 'dollar-ruble' | 'ruble-dollar' | 'Euro-ruble' | 'ruble-Euro'
+type CurrenciesBase = {
+  value: CurrenciesSeparationValue
+  text: string
+}
+
+const currencies = ref<CurrenciesBase[]>([
+  { value: 'dollar-ruble', text: 'Доллар=>Рубль' },
+  { value: 'ruble-dollar', text: 'Рубль=>Доллар' },
+  { value: 'Euro-ruble', text: 'Евро=>Рубль' },
+  { value: 'ruble-Euro', text: 'Рубль=>Евро' },
+])
+
+let selectedCurrency = ref('dollar-ruble')
+const textInputDesired = ref(0)
+
+const calc = computed(() => {
+  if ((selectedCurrency.value = 'dollar-ruble')) {
+    return textInputDesired.value * 100
+  }
+  if ((selectedCurrency.value = 'ruble-dollar')) {
+    return textInputDesired.value * 10
+  }
+  if ((selectedCurrency.value = 'Euro-ruble')) {
+    return textInputDesired.value * 9
+  }
+  if ((selectedCurrency.value = 'ruble-Euro')) {
+    return textInputDesired.value * 90
+  }
+})
+</script>
+
+<template>
+  <div class="conversion">
+    <label class="conversion__label">
+      <input
+        class="conversion__input window"
+        type="number"
+        v-model="textInputDesired"
+      />
+    </label>
+    <select
+      class="conversion__select window"
+      name="currency"
+      v-model="selectedCurrency"
+    >
+      <option
+        v-for="currency in currencies"
+        :key="currency.value"
+        :value="currency.value"
+      >
+        {{ currency.text }}
+      </option>
+    </select>
+    <span class="conversion__span window"> {{ calc }}</span>
+  </div>
+</template>
+
+<style>
+.conversion {
+  width: 400px;
+  height: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+  padding: 20px;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.window {
+  height: 40px;
+  margin-bottom: 20px;
+}
+
+.conversion__input {
+  border: none;
+  outline: 0;
+}
+
+.conversion__select {
+  border: 1px solid black;
+  border-radius: 10px;
 }
 </style>
