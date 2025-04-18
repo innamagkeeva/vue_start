@@ -162,16 +162,16 @@ let selectedCurrency = ref('dollar-ruble')
 const textInputDesired = ref(0)
 
 const calc = computed(() => {
-  if ((selectedCurrency.value = 'dollar-ruble')) {
+  if (selectedCurrency.value === 'dollar-ruble') {
     return textInputDesired.value * 100
   }
-  if ((selectedCurrency.value = 'ruble-dollar')) {
+  if (selectedCurrency.value === 'ruble-dollar') {
     return textInputDesired.value * 10
   }
-  if ((selectedCurrency.value = 'Euro-ruble')) {
+  if (selectedCurrency.value === 'Euro-ruble') {
     return textInputDesired.value * 9
   }
-  if ((selectedCurrency.value = 'ruble-Euro')) {
+  if (selectedCurrency.value === 'ruble-Euro') {
     return textInputDesired.value * 90
   }
 })
