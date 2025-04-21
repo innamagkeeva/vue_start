@@ -146,35 +146,25 @@ const buttonText = computed(() => (isShowed.value ? 'скрыть' : 'показ
 import { computed, ref } from 'vue'
 
 type CurrenciesSeparationValue = 'dollar-ruble' | 'ruble-dollar' | 'Euro-ruble' | 'ruble-Euro'
+
 type CurrenciesBase = {
   value: CurrenciesSeparationValue
   text: string
+  factor: number
 }
 
 const currencies = ref<CurrenciesBase[]>([
-  { value: 'dollar-ruble', text: 'Доллар=>Рубль' },
-  { value: 'ruble-dollar', text: 'Рубль=>Доллар' },
-  { value: 'Euro-ruble', text: 'Евро=>Рубль' },
-  { value: 'ruble-Euro', text: 'Рубль=>Евро' },
+  { value: 'dollar-ruble', text: 'Доллар=>Рубль', factor: 100 },
+  { value: 'ruble-dollar', text: 'Рубль=>Доллар', factor: 10 },
+  { value: 'Euro-ruble', text: 'Евро=>Рубль', factor: 90 },
+  { value: 'ruble-Euro', text: 'Рубль=>Евро', factor: 9 },
 ])
 
-let selectedCurrency = ref('dollar-ruble')
+const selectedCurrency = ref<CurrenciesBase>(currencies.value[0])
+
 const textInputDesired = ref(0)
 
-const calc = computed(() => {
-  if (selectedCurrency.value === 'dollar-ruble') {
-    return textInputDesired.value * 100
-  }
-  if (selectedCurrency.value === 'ruble-dollar') {
-    return textInputDesired.value * 10
-  }
-  if (selectedCurrency.value === 'Euro-ruble') {
-    return textInputDesired.value * 9
-  }
-  if (selectedCurrency.value === 'ruble-Euro') {
-    return textInputDesired.value * 90
-  }
-})
+const calc = computed(() => textInputDesired.value * selectedCurrency.value.factor)
 </script>
 
 <template>
@@ -194,7 +184,7 @@ const calc = computed(() => {
       <option
         v-for="currency in currencies"
         :key="currency.value"
-        :value="currency.value"
+        :value="currency"
       >
         {{ currency.text }}
       </option>
